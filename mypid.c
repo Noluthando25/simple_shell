@@ -15,20 +15,19 @@ int main(void)
 
 	pid = fork();
 
-        if (pid == -1)
+	if (pid == -1)
 		return (1);
+	if (pid == 0)
+	{
+		int num = execve(argv[0], argv, NULL);
 
-        else if (pid == 0)
-        {
-            int num = execve(argv[0], argv, NULL);
-
-	    if (num == -1)
-		    perror("Error");
-        }
-        else
-        {
-            wait(NULL);
-	    printf("done\n");
-        }
+	if (num == -1)
+		perror("Error");
+	}
+	else
+	{
+		wait(NULL);
+			printf("done\n");
+	}
 	return (0);
 }
