@@ -10,24 +10,26 @@
 
 int main(void)
 {
-	pid_t pid;
-	char *argv[] = {"/bin/ls", "-l", NULL};
+	char *m = NULL, *m_cpy = NULL, *token = NULL;
+	char *del = " \n";
+	size_t n = 0;
+	int argc = 0, a = 0;
+	char **argv = NULL;
 
-	pid = fork();
+	printf("$ ");
 
-	if (pid == -1)
-		return (1);
-	if (pid == 0)
+	if (getline(&m, &n, stdin) == -1)
+		return (-1);
+	m_cpy = strdup(m);
+
+	while (m[a])
 	{
-		int num = execve(argv[0], argv, NULL);
+		if (m[a] == '\n')
+			printf("\\n ---> Input has %ld characters", strlen(m));
+		else
+			printf("%c", m[a]);
+		a++;
+	}
 
-	if (num == -1)
-		perror("Error");
-	}
-	else
-	{
-		wait(NULL);
-			printf("done\n");
-	}
 	return (0);
 }
